@@ -8,10 +8,40 @@
 .item {
   padding: 10px;
   width: 100%;
-  border: 1px solid #000;
+  /* border: 1px solid rgb(94, 94, 94); */
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
   border-radius: 5px;
+  position: relative;
+  background-color: rgb(94, 94, 94);
+  overflow: hidden;
+  transition: 0.5s all;
+}
+
+.item:after {
+  content: '';
+  width: 0;
+  position: absolute;
+  height: 4px;
+  top: 0;
+  left: 0;
+  transition: 0.3s all;
+  background: linear-gradient(
+    90deg,
+    rgba(68, 126, 57, 0.7) 40%,
+    rgb(32, 96, 214) 100%
+  );
+}
+
+.active {
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.active:after {
+  width: 100%;
+}
+.active > p {
+  text-decoration: line-through;
 }

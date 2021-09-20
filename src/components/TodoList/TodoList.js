@@ -1,6 +1,7 @@
+import classNames from 'classnames';
 import s from './TodosList.module.css';
 
-export default function TodoList({ todos, onDeleteTodo }) {
+export default function TodoList({ todos, onDeleteTodo, onToggleCompleted }) {
   const completedTodos = todos.reduce(
     (acc, todo) => (todo.completed ? acc + 1 : acc),
     0,
@@ -14,15 +15,25 @@ export default function TodoList({ todos, onDeleteTodo }) {
       </>
 
       <ul className={s.list}>
-        {todos.map(({ id, text }) => (
-          <li key={id} className={s.item}>
+        {todos.map(({ id, text, completed }) => (
+          <li
+            key={id}
+            className={classNames([s.item], {
+              [s.active]: completed,
+            })}
+          >
+            <input
+              type="checkbox"
+              checked={completed}
+              onChange={() => {
+                onToggleCompleted(id);
+              }}
+            />
             <p>{text}</p>
             <button
               className={s.button}
               type="button"
-              onClick={() => {
-                onDeleteTodo(id);
-              }}
+              onClick={() => onDeleteTodo(id)}
             >
               Delete
             </button>

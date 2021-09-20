@@ -5,6 +5,7 @@ export default class Form extends Component {
     name: '',
     tag: '',
     experience: 'junior',
+    licence: false,
   };
 
   handleChange = e => {
@@ -12,6 +13,10 @@ export default class Form extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  handleLicenceChange = e => {
+    this.setState({ licence: e.currentTarget.checked });
   };
 
   handleSubmit = e => {
@@ -36,6 +41,8 @@ export default class Form extends Component {
             onChange={this.handleChange}
           />
         </label>
+
+        <br />
         <label>
           tag
           <input
@@ -45,7 +52,6 @@ export default class Form extends Component {
             onChange={this.handleChange}
           />
         </label>
-
         <p>Ваш уровень: </p>
         <label>
           <input
@@ -54,7 +60,7 @@ export default class Form extends Component {
             value="junior"
             checked={this.state.experience === 'junior'}
             onChange={this.handleChange}
-          />{' '}
+          />
           Junior
         </label>
         <label>
@@ -64,7 +70,7 @@ export default class Form extends Component {
             value="middle"
             checked={this.state.experience === 'middle'}
             onChange={this.handleChange}
-          />{' '}
+          />
           Middle
         </label>
         <label>
@@ -74,11 +80,22 @@ export default class Form extends Component {
             value="senior"
             checked={this.state.experience === 'senior'}
             onChange={this.handleChange}
-          />{' '}
+          />
           Senior
         </label>
         <br />
-        <button type="submit">send</button>
+        <label>
+          <input
+            type="checkbox"
+            name="licence"
+            checked={this.state.licence}
+            onChange={this.handleLicenceChange}
+          />
+          Согласен с условием
+        </label>
+        <button type="submit" disabled={!this.state.licence}>
+          send
+        </button>
       </form>
     );
   }

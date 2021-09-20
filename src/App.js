@@ -26,11 +26,34 @@ export default class App extends Component {
     good: 0,
     neutral: 0,
     bad: 0,
+    experience: '',
   };
 
   deleteTodo = todoId => {
     this.setState(prevState => ({
       todos: prevState.todos.filter(todo => todo.id !== todoId),
+    }));
+  };
+
+  toggleCompleted = todoId => {
+    // console.log(todoId);
+    // this.setState(prevState => ({
+    //   todos: prevState.todos.map(todo => {
+    //     if (todo.id === todoId) {
+    //       return {
+    //         ...todo,
+    //         completed: !todo.completed,
+    //       };
+    //     }
+    //     return todo;
+    //   }),
+    // }));
+
+    //prevState => {todo}
+    this.setState(({ todos }) => ({
+      todos: todos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+      ),
     }));
   };
 
@@ -41,7 +64,11 @@ export default class App extends Component {
   };
 
   formSubmitHandler = data => {
-    console.log(data);
+    this.setState(() => ({
+      name: data.name,
+      tag: data.tag,
+      experience: data.experience,
+    }));
   };
 
   // handleNameChange = event => {
@@ -72,7 +99,11 @@ export default class App extends Component {
         <Section color="rgba(143, 22, 82, 0.8)" img={img2}>
           <Container title="Module 2">
             <Form onSubmit={this.formSubmitHandler} />
-            <Todolist todos={todos} onDeleteTodo={this.deleteTodo} />
+            <Todolist
+              todos={todos}
+              onDeleteTodo={this.deleteTodo}
+              onToggleCompleted={this.toggleCompleted}
+            />
             <Dropdown />
             <Counter initialValue={10} />
           </Container>
