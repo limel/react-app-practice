@@ -5,8 +5,10 @@
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+}
+
+.Container > h2 {
+  text-align: center;
+  margin: 0;
+  padding-bottom: 20px;
 }
