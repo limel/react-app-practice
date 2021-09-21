@@ -8,6 +8,14 @@ export default class Form extends Component {
     licence: false,
   };
 
+  // handleNameChange = event => {
+  //   this.setState({ name: event.currentTarget.value });
+  // };
+
+  // handleTagChange = event => {
+  //   this.setState({ tag: event.currentTarget.value });
+  // };
+
   handleChange = e => {
     const { name, value } = e.currentTarget;
     this.setState({
@@ -23,6 +31,10 @@ export default class Form extends Component {
     e.preventDefault();
     this.props.onSubmit(this.state);
     this.reset();
+
+    setTimeout(() => {
+      console.log(e.target);
+    }, 1000);
   };
 
   reset = () => {

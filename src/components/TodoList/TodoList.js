@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import s from './TodosList.module.css';
 
-export default function TodoList({ todos, onDeleteTodo, onToggleCompleted }) {
-  const completedTodos = todos.reduce(
-    (acc, todo) => (todo.completed ? acc + 1 : acc),
-    0,
-  );
-
+export default function TodoList({
+  todos,
+  onDeleteTodo,
+  onToggleCompleted,
+  completedTodos,
+}) {
   return (
     <div>
       <>

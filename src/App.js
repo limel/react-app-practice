@@ -1,5 +1,6 @@
 import './App.css';
 import React, { Component } from 'react';
+import shortid from 'shortid';
 import Dropdown from './components/Dropdown';
 import Container from './components/Container/Container';
 import Profile from './components/Profile/Profile';
@@ -13,6 +14,8 @@ import img2 from './components/Section/img-2.jpg';
 import img3 from './components/Section/img-3.png';
 import Statistics from './components/Statistics/Statistics';
 import Form from './components/Form';
+import TodoAdd from './components/TodoAdd/TodoAdd';
+import Filter from './components/Filter/Fiter';
 
 import initialTodos from './todos.json';
 import user from './user.json';
@@ -27,6 +30,7 @@ export default class App extends Component {
     neutral: 0,
     bad: 0,
     experience: '',
+    filter: '',
   };
 
   deleteTodo = todoId => {
@@ -49,7 +53,7 @@ export default class App extends Component {
     //   }),
     // }));
 
-    //prevState => {todo}
+    //prevState деструктуризируем в {todo}
     this.setState(({ todos }) => ({
       todos: todos.map(todo =>
         todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
@@ -71,20 +75,41 @@ export default class App extends Component {
     }));
   };
 
-  // handleNameChange = event => {
-  //   this.setState({ name: event.currentTarget.value });
-  // };
+  addTodo = text => {
+    const todo = {
+      id: shortid.generate(),
+      text,
+      completed: false,
+    };
+    this.setState(({ todos }) => ({
+      todos: [todo, ...todos],
+    }));
+  };
+  changeFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
+  };
 
-  // handleTagChange = event => {
-  //   this.setState({ tag: event.currentTarget.value });
-  // };
+  getVisibleTodo = () => {
+    const { filter, todos } = this.state;
+
+    const normalizedFilter = filter.toLowerCase();
+    return todos.filter(todo =>
+      todo.text.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  getCompletedTodoCount = () => {
+    const { todos } = this.state;
+    return todos.reduce((acc, todo) => (todo.completed ? acc + 1 : acc), 0);
+  };
 
   render() {
-    const { todos } = this.state;
     const options = Object.keys(this.state).slice(3, 6);
-    console.log(options);
-    console.log(this.state);
     const { good, neutral, bad } = this.state;
+    const { filter } = this.state;
+    const completedTodos = this.getCompletedTodoCount();
+    const visibleTodos = this.getVisibleTodo();
+
     return (
       <>
         <h1 className="Title">My React road-map</h1>
@@ -99,11 +124,15 @@ export default class App extends Component {
         <Section color="rgba(143, 22, 82, 0.8)" img={img2}>
           <Container title="Module 2">
             <Form onSubmit={this.formSubmitHandler} />
+            <Filter vaue={filter} onChange={this.changeFilter} />
             <Todolist
-              todos={todos}
+              todos={visibleTodos}
               onDeleteTodo={this.deleteTodo}
               onToggleCompleted={this.toggleCompleted}
+              completedTodos={completedTodos}
             />
+
+            <TodoAdd onSubmit={this.addTodo} />
             <Dropdown />
             <Counter initialValue={10} />
           </Container>

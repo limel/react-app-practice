@@ -1,0 +1,26 @@
+.form {
+  padding: 20px;
+  background-color: rgb(94, 94, 94);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 5px;
+  max-width: 366.66px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-bottom: 40px;
+}
+
+.form > textarea {
+  width: 100%;
+  border-radius: 5px;
+  height: 120px;
+  resize: none;
+  margin-bottom: 20px;
+  outline: none;
+  padding: 10px;
+}
+
+.form > button {
+  width: 100%;
+}
